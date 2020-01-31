@@ -30,9 +30,9 @@ def index():
 
 @app.route('/test', methods=["GET"])
 def button():
-	
+
 	light_state = not GPIO.input(24) 
-	if light_state == 0:
+	if light_state == 1:
 		toggle()
 		return render_template('index.html', color="black", state="Turn on")
 	else:
