@@ -23,11 +23,11 @@ app.config.from_object(__name__)
 def index():
 	light_state = not GPIO.input(24) 
 	# Turn off
-	if light_state == 1:
-		mirror_status = 0
+	if light_state == 0:
+		toggle()
 		return render_template('index.html', color="black", state="Turn on")
 	else:
-		process = subprocess.call(['/home/pi/python3 ', 'display.py' 'turnoff'], shell=True)
+		toggle()
 		return render_template('index.html', color="white", state="Turn off")
 
 def toggle():
