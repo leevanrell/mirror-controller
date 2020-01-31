@@ -19,8 +19,18 @@ app.config.from_object(__name__)
 
 
 @app.route('/', methods=['GET'])
-@app.route('/test', methods=["GET"])
 def index():
+	#GPIO is high when disp is off and GPIO low when off, inverting because that seems more logical
+	light_state = not GPIO.input(24) 
+	if light_state == 0:
+		return render_template('index.html', color="black", state="Turn on")
+	else:
+		return render_template('index.html', color="white", state="Turn off")
+
+
+
+@app.route('/test', methods=["GET"])
+def button():
 	light_state = not GPIO.input(24) 
 	# Turn off
 	if light_state == 0:
@@ -29,6 +39,7 @@ def index():
 	else:
 		toggle()
 		return render_template('index.html', color="white", state="Turn off")
+
 
 def toggle():
 	GPIO.output(23, GPIO.HIGH)
